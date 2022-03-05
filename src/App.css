@@ -1,0 +1,14 @@
+.title {
+  
+  height: 68px;
+  margin-left: 101px;
+  margin-top: 160px;
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 42px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  color: #1D1F22;
+}
