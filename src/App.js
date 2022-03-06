@@ -1,21 +1,21 @@
 import "./App.css";
 import React, { Component } from "react";
-import Navbar from "./components/Navbar/Navbar";
-import ProductCard from "./components/Product/Product";
+import Navbar from "./components/navbar";
+import ProductCard from "./components/products";
 import { categories } from "./query/query";
 import { client } from "./index";
 
 class App extends Component {
   state = {
-    categ: [],
+    allCategories: [],
     filterArr: [],
   };
   componentDidMount = async () => {
-    const categ = await client.query({
+    const allCategory = await client.query({
       query: categories,
     });
     this.setState({
-      categ: categ.data.categories,
+      allCategories: allCategory.data.categories,
     });
   };
 
@@ -24,9 +24,9 @@ class App extends Component {
     const byOrigin = event.target.value;
     let filterArr = [];
     if (event.target.value === "all") {
-      filterArr = this.state.categ;
+      filterArr = this.state.allCategories;
     } else {
-      filterArr = this.state.categ.filter((el) => el.origin === byOrigin);
+      filterArr = this.state.allCategories.filter((el) => el.origin === byOrigin);
     }
     this.setState({ filterArr: filterArr });
     console.log(byOrigin, "filter");
@@ -38,7 +38,7 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <div className="navigation">
-          {this.state.categ.map((el, i) => {
+          {this.state.allCategories.map((el, i) => {
             return (
               <button
                 key={i}
@@ -53,7 +53,7 @@ class App extends Component {
         </div>
         <p className="title">Category Name</p>
         <ProductCard
-          categ={this.state.categ}
+          categ={this.state.allCategories}
         />
       </div>
     );
