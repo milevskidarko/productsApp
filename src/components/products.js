@@ -2,6 +2,8 @@ import "../App.css";
 import { categories } from "../query/query";
 import React, { Component } from "react";
 import { client } from "../index";
+import Product from './product'
+
 
 class Products extends Component {
     constructor(props) {
@@ -24,17 +26,7 @@ class Products extends Component {
             <div className="inner">
                 {this.state.allCategories.map((product) => {
                     return product.products.map((el, i) => {
-                        return (
-                            <div key={i} className="product">
-                                <img
-                                    key={i}
-                                    className="productPicture"
-                                    src={el.gallery[0]}
-                                    alt="img"
-                                />
-                                <h2>{el.name}</h2>
-                            </div>
-                        );
+                        return <Product el={el} key={i} />
                     });
                 })}
             </div>
