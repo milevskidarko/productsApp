@@ -26,7 +26,7 @@
   bottom: 0%;
   background: #ffffff;
 }
-.navigation {
+.categories {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -58,7 +58,7 @@
   font-size: 20px;
   width: 36px;
 }
-.catItems {
+.categoriesName {
   position: static;
   height: 20px;
   left: 0%;
@@ -93,10 +93,10 @@
   background: linear-gradient(316.98deg, #52d67a 16.88%, #5aee87 84.04%);
   color: white;
 }
-.shopItem {
+.shoppingItem {
   margin-left: 24px;
 }
-.shopItem img {
+.shoppingItem img {
   left: 0%;
   right: 0%;
   top: 5.84%;
@@ -104,7 +104,7 @@
   width: 20px;
   background: #43464e;
 }
-.inner {
+.productList {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

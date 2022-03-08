@@ -1,60 +1,68 @@
 import "./App.css";
 import React, { Component } from "react";
 import Navbar from "./components/navbar";
-import ProductCard from "./components/products";
+import Products from "./components/products";
 import { categories } from "./query/query";
 import { client } from "./index";
 
 class App extends Component {
   state = {
-    allCategories: [],
-    filterArr: [],
+    categories: [],
+    filtered: [],
   };
   componentDidMount = async () => {
     const allCategory = await client.query({
       query: categories,
     });
+    let flatListOfCategories = [];
+    allCategory.data.categories.map(category => {
+      if (category.name === "all") {
+        flatListOfCategories = category.products
+      }
+      return true
+    })
     this.setState({
-      allCategories: allCategory.data.categories,
-    });
+      filtered: flatListOfCategories,
+      ...allCategory.data
+    })
   };
 
-  handleClick = (event) => {
-    console.log(event.target.value, "event");
-    const byOrigin = event.target.value;
-    let filterArr = [];
-    if (event.target.value === "all") {
-      filterArr = this.state.allCategories;
-    } else {
-      filterArr = this.state.allCategories.filter((el) => el.origin === byOrigin);
-    }
-    this.setState({ filterArr: filterArr });
-    console.log(byOrigin, "filter");
-    console.log(filterArr, 'filterArr')
+  handleClick = (name) => {
+    let filtered = [];
+    this.state.categories.map(category => {
+      if (category.name === name) {
+        filtered = category.products;
+        return true;
+      }
+      return false;
+    })
+    this.setState({
+      ...this.state,
+      filtered: filtered,
+    });
   };
 
   render() {
     return (
       <div className="App">
         <Navbar />
-        <div className="navigation">
-          {this.state.allCategories.map((el, i) => {
-            return (
-              <button
-                key={i}
-                className="catItems"
-                onClick={this.handleClick}
-                value={el.name}
-              >
-                {el.name}
-              </button>
-            );
-          })}
+        <div className="categories">
+          <ul>
+            {this.state.categories.map((el, i) => {
+              return (
+                <li
+                  key={i}
+                  className="categoriesName"
+                  onClick={() => { this.handleClick(el.name) }}
+                >
+                  {el.name}
+                </li>
+              );
+            })}
+          </ul>
         </div>
         <p className="title">Category Name</p>
-        <ProductCard
-          categ={this.state.allCategories}
-        />
+        <Products data={this.state.filtered} />
       </div>
     );
   }
